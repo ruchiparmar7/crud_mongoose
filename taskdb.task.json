@@ -1,0 +1,34 @@
+[{
+  "_id": {
+    "$oid": "65200c161e94871357f351c7"
+  },
+  "id": 123,
+  "name": "Ruchi",
+  "address": "abc"
+},
+{
+  "_id": {
+    "$oid": "65200c161e94871357f351c8"
+  },
+  "id": 321,
+  "name": "vivek",
+  "address": "nadiad"
+},
+{
+  "_id": {
+    "$oid": "65217d4892cf3c5faf88aeab"
+  },
+  "id": 21,
+  "name": "qw",
+  "address": "sdx",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65217d7792cf3c5faf88aef4"
+  },
+  "id": 123,
+  "name": "wed",
+  "address": "decf",
+  "__v": 0
+}]
