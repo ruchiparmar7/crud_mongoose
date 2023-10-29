@@ -14,6 +14,25 @@
   <body>
     <div class="container">
       <div ng-controller="ctrl">
+        <div class="col-12">
+          Set Limit of Data:
+          <input type="number" class="form-control w-25" ng-model="count" />
+        </div>
+        <div class="col-4">
+          <lable>Select The Data: </lable>
+          <select
+            ng-model="data"
+            ng-options="ele.id for ele in alltask"
+            class="form-control"
+          ></select>
+          <div class="col-4">
+            <lable>Select The Order of Data: </lable>
+            <select ng-model="order" class="form-control">
+              <option value="Ascending">Ascending</option>
+              <option value="Descending">Descending</option>
+            </select>
+          </div>
+        </div>
         <form>
           Search Product:
           <input type="text" class="form-control w-25 mb-5" ng-model="search" />
@@ -36,6 +55,7 @@
               id="name"
               ng-model="newrecord.name"
               aria-describedby="emailHelp"
+              value="name"
             />
           </div>
           <div class="mb-3">
@@ -74,14 +94,16 @@
             <tr>
               <th scope="col">_ID</th>
               <th scope="col">id</th>
-              <th scope="col">name</th>
+              <th scope="col" ng-click="ascdesc('name')">name</th>
               <th scope="col">address</th>
               <th scope="col">delete</th>
               <th scope="col">update</th>
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="ele in alltask | filter:search">
+            <tr
+              ng-repeat="ele in alltask | filter:search | limitTo:count | filter:data | orderBy:order==='Ascending'?'id':'-id'| orderBy:name "
+            >
               <th scope="row">{{ele._id}}</th>
               <td>{{ele.id}}</td>
               <td>{{ele.name}}</td>

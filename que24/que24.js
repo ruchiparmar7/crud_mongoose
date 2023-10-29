@@ -1,14 +1,10 @@
 const express = require("express");
 const connectDB = require("./dbmongo");
-const bodyparser = require("body-parser");
-const path = require("path");
 const mongoose = require("mongoose");
 const app = express();
 connectDB();
 app.use(express.static(__dirname));
 app.use(express.json());
-
-const PORT = process.env.PORT || 8080;
 
 const Schema = mongoose.Schema;
 
@@ -61,13 +57,14 @@ app.put("/update", async (req, res) => {
     address: req.body.address,
   };
 
-  const result = await alltask.findByIdAndUpdate(id, updatedData, { new: true })
+  const result = await alltask
+    .findByIdAndUpdate(id, updatedData, { new: true })
     .then(() => {
       res.status(200).json("Record Updated");
     })
     .catch((err) => console.log(err));
 });
 
-app.listen(PORT, function () {
-  console.log("Server is running on port " + PORT);
+app.listen(8081, function () {
+  console.log("Server is running on port ");
 });

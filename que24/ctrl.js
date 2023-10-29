@@ -31,8 +31,23 @@ ang.controller("ctrl", function ($scope, $http) {
   };
 
   $scope.updatetask = function (id) {
-    $http.put("/update",$scope.newrecord).then(function () {
+    $http.put("/update", $scope.newrecord).then(function () {
       $scope.gettask();
+      $scope.clearUpdate();
     });
+  };
+  
+  $scope.clearUpdate = function () {
+    $scope.newrecord = {};
+    $scope.isupdatebtn = false;
+    $scope.isaddbtn = true;
+  };
+
+  $scope.ascdesc = function (fnname) {
+    if ($scope.name === fnname) {
+      $scope.name = "-" + fnname;
+    } else {
+      $scope.name = fnname;
+    }
   };
 });
