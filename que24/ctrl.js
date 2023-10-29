@@ -2,17 +2,27 @@ const ang = angular.module("myApp", []);
 
 ang.controller("ctrl", function ($scope, $http) {
   $scope.alltask = [];
+  $scope.task = [];
   $scope.gettask = function () {
     $http.get("/data").then(function (response) {
-      $scope.alltask = response.data;
+      $scope.task = response.data;
+      $scope.itemPerPage = 3;
+      $scope.currentPage = 1;
+      $scope.totalPages = Math.ceil($scope.task.length / $scope.itemPerPage);
+      $scope.startIndex = 0;
+      $scope.endIndex = $scope.itemPerPage;
+
+      $scope.updatePagination();
     });
   };
+
   $scope.gettask();
   $scope.isupdatebtn = false;
   $scope.isaddbtn = true;
   $scope.addtask = function () {
     $http.post("/addtask", $scope.newrecord).then(function () {
       $scope.gettask();
+      $scope.newrecord = {};
     });
   };
 
@@ -36,7 +46,7 @@ ang.controller("ctrl", function ($scope, $http) {
       $scope.clearUpdate();
     });
   };
-  
+
   $scope.clearUpdate = function () {
     $scope.newrecord = {};
     $scope.isupdatebtn = false;
@@ -50,4 +60,28 @@ ang.controller("ctrl", function ($scope, $http) {
       $scope.name = fnname;
     }
   };
+
+  $scope.updatePagination = () => {
+    console.log($scope.task);
+    $scope.startIndex = ($scope.currentPage - 1) * $scope.itemPerPage;
+    $scope.endIndex = $scope.startIndex + $scope.itemPerPage;
+    $scope.alltask = $scope.task.slice($scope.startIndex, $scope.endIndex);
+    console.log($scope.alltask);
+  };
+
+  $scope.nextPage = () => {
+    if ($scope.currentPage < $scope.totalPages) {
+      $scope.currentPage++;
+      $scope.updatePagination();
+    }
+  };
+
+  $scope.prevPage = () => {
+    if ($scope.currentPage > 1) {
+      $scope.currentPage--;
+      $scope.updatePagination();
+    }
+  };
+
+  $scope.updatePagination();
 });
